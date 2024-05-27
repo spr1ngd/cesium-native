@@ -53,7 +53,7 @@ namespace CesiumRasterOverlays
             options.moreDetailAvailable = tileID.level < this->getMaximumLevel();
             // options.rectangle = this->getTilingScheme().tileToRectangle(tileID);
 
-            const GlobeRectangle tileRectangle = unprojectRectangleSimple( this->getProjection(), options.rectangle);
+            // const GlobeRectangle tileRectangle = unprojectRectangleSimple( this->getProjection(), options.rectangle);
 
             auto replacePlaceholder = [](const std::string& baseUrl, const std::string& placeholder, const std::string& value)
             {
@@ -160,10 +160,10 @@ namespace CesiumRasterOverlays
                 coverageRectangle,
                 this->_url,
                 this->_options.format,
-                this->_options.minimumLevel,
-                this->_options.maximumLevel,
-                this->_options.tileWidth,
-                this->_options.tileHeight,
+                (uint32_t)this->_options.minimumLevel,
+                (uint32_t)this->_options.maximumLevel,
+                (uint32_t)this->_options.tileWidth,
+                (uint32_t)this->_options.tileHeight,
                 this->_options.flipY
             );
             promise.resolve(handleResponseResult);
