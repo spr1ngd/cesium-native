@@ -23,6 +23,7 @@ namespace CesiumRasterOverlays
             const CesiumGeometry::Rectangle& coverageRectangle,
             const std::string& url,
             const std::string& format,
+            const std::vector<CesiumAsync::IAssetAccessor::THeader>& headers,
             uint32_t minimumLevel,
             uint32_t maximumLevel,
             uint32_t width,
@@ -35,6 +36,7 @@ namespace CesiumRasterOverlays
                     minimumLevel, maximumLevel, width, height)
           , _url(url)
           , _format(format)
+          , _headers(headers)
           , _flipY(flipY)
         {
 
@@ -74,23 +76,26 @@ namespace CesiumRasterOverlays
             url = replacePlaceholder(url, "{x}", std::to_string(x));
             url = replacePlaceholder(url, "{y}", std::to_string(y));
             url += _format;
-            return this->loadTileImageFromUrl(url, {}, std::move(options));
+            return this->loadTileImageFromUrl(url, _headers, std::move(options));
         }
 
     private:
 
         std::string _url;
         std::string _format;
+        std::vector<CesiumAsync::IAssetAccessor::THeader> _headers;
         bool _flipY;
     };
 
     TileMapRasterOverlay::TileMapRasterOverlay (
         const std::string& name,
         const std::string& url,
+        std::vector<CesiumAsync::IAssetAccessor::THeader> headers,
         const TileMapRasterOverlayOptions tmOptions,
         const RasterOverlayOptions overlayOptions)
           : RasterOverlay(name, overlayOptions)
           , _url(url)
+          , _headers(headers)
           , _options(tmOptions)
     {
 
@@ -160,6 +165,7 @@ namespace CesiumRasterOverlays
                 coverageRectangle,
                 this->_url,
                 this->_options.format,
+                this->_headers,
                 (uint32_t)this->_options.minimumLevel,
                 (uint32_t)this->_options.maximumLevel,
                 (uint32_t)this->_options.tileWidth,

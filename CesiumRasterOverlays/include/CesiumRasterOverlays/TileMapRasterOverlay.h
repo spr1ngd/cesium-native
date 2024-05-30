@@ -32,6 +32,7 @@ namespace CesiumRasterOverlays
         TileMapRasterOverlay(
             const std::string& name,
             const std::string& url,
+            std::vector<CesiumAsync::IAssetAccessor::THeader> headers = {},
             const TileMapRasterOverlayOptions tmOptions = {},
             const RasterOverlayOptions overlayOptions = {}
         );
@@ -50,6 +51,7 @@ namespace CesiumRasterOverlays
     private:
 
         std::string _url;
+        std::vector<CesiumAsync::IAssetAccessor::THeader> _headers;
         TileMapRasterOverlayOptions _options;
     };
 }
