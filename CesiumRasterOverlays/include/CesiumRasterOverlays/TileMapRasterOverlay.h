@@ -23,6 +23,7 @@ namespace CesiumRasterOverlays
         std::optional<CesiumGeometry::QuadtreeTilingScheme> tilingScheme;
         std::optional<CesiumGeospatial::Ellipsoid> ellipsoid;
         bool flipY = false;
+        int8_t tileMapSrc = -1;
     };
 
     class CESIUMRASTEROVERLAYS_API TileMapRasterOverlay : public RasterOverlay

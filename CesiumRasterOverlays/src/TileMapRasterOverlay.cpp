@@ -28,7 +28,8 @@ namespace CesiumRasterOverlays
             uint32_t maximumLevel,
             uint32_t width,
             uint32_t height,
-            bool flipY
+            bool flipY,
+            int8_t tileMapSrc
             ) : QuadtreeRasterOverlayTileProvider(pOwner, asyncSystem, pAssetAccessor, {}, pPrepareRendererResources, pLogger,
                     projection,
                     tilingScheme,
@@ -38,6 +39,7 @@ namespace CesiumRasterOverlays
           , _format(format)
           , _headers(headers)
           , _flipY(flipY)
+          , _tileMapSrc(tileMapSrc)
         {
 
         }
@@ -53,6 +55,7 @@ namespace CesiumRasterOverlays
             options.allowEmptyImages = true;
             options.rectangle = this->getTilingScheme().tileToRectangle(tileID);
             options.moreDetailAvailable = tileID.level < this->getMaximumLevel();
+            options.tileMapSource = this->_tileMapSrc;
             // options.rectangle = this->getTilingScheme().tileToRectangle(tileID);
 
             // const GlobeRectangle tileRectangle = unprojectRectangleSimple( this->getProjection(), options.rectangle);
@@ -85,6 +88,7 @@ namespace CesiumRasterOverlays
         std::string _format;
         std::vector<CesiumAsync::IAssetAccessor::THeader> _headers;
         bool _flipY;
+        int8_t _tileMapSrc;
     };
 
     TileMapRasterOverlay::TileMapRasterOverlay (
@@ -170,7 +174,8 @@ namespace CesiumRasterOverlays
                 (uint32_t)this->_options.maximumLevel,
                 (uint32_t)this->_options.tileWidth,
                 (uint32_t)this->_options.tileHeight,
-                this->_options.flipY
+                this->_options.flipY,
+                this->_options.tileMapSrc
             );
             promise.resolve(handleResponseResult);
         });

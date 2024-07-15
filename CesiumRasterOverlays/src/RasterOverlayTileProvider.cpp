@@ -180,6 +180,25 @@ RasterOverlayTileProvider::loadTileImageFromUrl(
 
             const gsl::span<const std::byte> data = pResponse->data();
 
+            if( options.tileMapSource == 1 && data.size() == 2521 ) {
+              return LoadedRasterOverlayImage{
+                std::nullopt,
+                options.rectangle,
+                std::move(options.credits),
+                {"Image response for " + pRequest->url() + " is empty."},
+                {},
+                options.moreDetailAvailable};
+            }
+            if( options.tileMapSource == 2 && data.size() == 4235 ) {
+             return LoadedRasterOverlayImage{
+               std::nullopt,
+               options.rectangle,
+               std::move(options.credits),
+               {"Image response for " + pRequest->url() + " is empty."},
+               {},
+               options.moreDetailAvailable};
+           }
+
             CesiumGltfReader::ImageReaderResult loadedImage =
                 RasterOverlayTileProvider::_gltfReader.readImage(
                     data,

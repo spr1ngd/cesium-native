@@ -111,6 +111,14 @@ struct LoadTileImageFromUrlOptions {
    * not available.
    */
   bool allowEmptyImages = false;
+
+  /**
+   * \brief tilemap source ,such as ArcGIS,Google,GaoDe
+   * Google : 0
+   * ArcGIS : 1
+   * GaoDe  : 2
+   */
+  int8_t tileMapSource = -1;
 };
 
 class RasterOverlayTileProvider;
